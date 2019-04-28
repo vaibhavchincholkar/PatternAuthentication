@@ -31,7 +31,12 @@ import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 
 import java.util.Random;
-
+/*
+* ARballmaster is the game Activity
+*This is a AR game wherein user has to tap balls to gain score.
+*If user misses a ball then score is decreased by one.
+*If user score goes below -1 then game is over.
+* */
 public class ARballmaster extends AppCompatActivity {
     private ArFragment arFragment;
     private Anchor anchor;
@@ -347,6 +352,11 @@ public class ARballmaster extends AppCompatActivity {
                             }
                         });
     }
+
+    /*
+    * setToOrignal methods changes the objects y positions so that they go back to surface
+    * also it provides random delay for the reappearance
+    * */
     void setToOrignal(Node obj)
     {
         if(obj==obj1)
@@ -446,7 +456,8 @@ public class ARballmaster extends AppCompatActivity {
             }, 3000);
         }
     }
-
+    /*
+    * addScore method add the score the current score of the user*/
     void addScore()
     {
         bubble.start();
@@ -495,7 +506,9 @@ public class ARballmaster extends AppCompatActivity {
         obj1.setEnabled(false);
         gameOver.setEnabled(false);
     }
-
+    /*
+     * gamereokay resets the game paramter to the start
+     * */
     void  gamereplay()
     {
         score=0;

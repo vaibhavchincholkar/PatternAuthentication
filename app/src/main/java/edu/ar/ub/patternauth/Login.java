@@ -20,7 +20,13 @@ import com.google.ar.sceneform.ux.ArFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+* Login Activity takes PlayerName from the Intent by which it was called.(i.e. GetLoginName activity)
+* It has ARfragment in it and allows user to create pattern on the surface
+* on the submission it verifies if the entered pattern is correct or not
+* if it is correct it redirects user to the ARBALLMASTER game
+*
+* */
 public class Login extends AppCompatActivity {
     private ArFragment arFragment;
     private Scene arSceneView;
@@ -42,7 +48,7 @@ public class Login extends AppCompatActivity {
         muri=uriBuilder.build();
         PatternAuthResolver=getContentResolver();
         PlayerName= getIntent().getStringExtra("PLAYERNAME");
-    //PatternAuthResolver.delete(muri,null,null);
+        //PatternAuthResolver.delete(muri,null,null);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         arSceneView = arFragment.getArSceneView().getScene();
         submit=findViewById(R.id.submit);
@@ -127,6 +133,12 @@ public class Login extends AppCompatActivity {
         return false;
     }
 
+    /*
+    * checkdifferce method verifies the difference between x and y coordinates of the provided objects and stored objects.
+    * it makes uses of two lists one is currpositions which has the current object provided by the user and storedlist which has
+    * stored objects by the user
+    * if the object difference between current objects and stored objects are less than 12 then the checkdifference returns true else false.
+    * */
     private boolean checkdifference()
     {
         Float x0,y0,x1,y1,sx0,sy0,sx1,sy1;

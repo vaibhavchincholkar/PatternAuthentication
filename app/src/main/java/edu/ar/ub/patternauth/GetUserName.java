@@ -10,7 +10,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
-
+/*
+* This activity takes PlayerName from user and checks if the username already exists in the database
+* if it exists it gives an error popup to the user
+* else it sends that name to Signup Activity for pattern creation.
+* */
 public class GetUserName extends AppCompatActivity {
     Button confrim;
     EditText playerName;
@@ -48,9 +52,13 @@ public class GetUserName extends AppCompatActivity {
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
             }
-
         });
     }
+    /*
+    * checkIfUserNameAvailable function takes PlayerName as parameter and checks if the provided name is in the DataBase or not
+    * if Database contains the PlayerName it returns False
+    * else it returns true
+    * */
     private boolean checkIfUserNameAvailable(String givenName)
     {
         Cursor UsernameCursor=PatternAuthResolver.query(muri,null,"username",null,null);

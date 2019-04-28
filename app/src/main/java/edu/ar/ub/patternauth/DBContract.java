@@ -1,5 +1,7 @@
 package edu.ar.ub.patternauth;
-
+/*
+* DBContract has all the constants for the column names and table names
+* */
 public class DBContract {
     //Table name
     public static final String TABLE_NAME="UsersData";

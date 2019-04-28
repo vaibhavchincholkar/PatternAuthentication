@@ -19,7 +19,11 @@ import com.google.ar.sceneform.ux.ArFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+* patternTest activity is use to make sure that user can reproduce the given pattern,
+* it allows user to enter the pattern it entered in the Signup activity
+* user can enter the pattern as many times as he wants
+* once user gets the enough confidence with his pattern he can store it*/
 public class PatternTest extends AppCompatActivity {
     private ArFragment arFragment;
     private Scene arSceneView;
@@ -125,6 +129,13 @@ public class PatternTest extends AppCompatActivity {
             anchorNode.addChild(placeholder);
         });
     }
+
+    /*
+     * verifyThePassword method verifies the difference between x and y coordinates of the provided objects and stored objects.
+     * it makes uses of two lists one is currpositions which has the current object provided by the user and storedlist which has
+     * stored objects by the user
+     * if the object difference between current objects and stored objects are less than 12 then the verifyThePassword returns true else false.
+     * */
     private boolean verifyThePassword()
     {
         Float x0,y0,x1,y1,sx0,sy0,sx1,sy1;
