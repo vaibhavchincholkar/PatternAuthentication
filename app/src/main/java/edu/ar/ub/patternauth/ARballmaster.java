@@ -35,7 +35,7 @@ import java.util.Random;
 * ARballmaster is the game Activity
 *This is a AR game wherein user has to tap balls to gain score.
 *If user misses a ball then score is decreased by one.
-*If user score goes below -1 then game is over.
+*If user score goes below -1 then game is over
 * */
 public class ARballmaster extends AppCompatActivity {
     private ArFragment arFragment;
