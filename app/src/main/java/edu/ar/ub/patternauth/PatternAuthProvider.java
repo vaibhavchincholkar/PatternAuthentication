@@ -8,6 +8,11 @@ import android.net.Uri;
 import android.util.Log;
 
 public class PatternAuthProvider extends ContentProvider {
+
+
+
+
+
     private PatternAuthDbHelper PADbHelper;
     @Override
     public boolean onCreate() {
@@ -20,8 +25,42 @@ public class PatternAuthProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = PADbHelper.getReadableDatabase();
         Cursor cursor=null;
-        if(uri.getEncodedPath().equals(DBContract.SCORE_TABLE))
+
+
+
+       if(String.valueOf(uri).equals("content://edu.ar.ub.patternauth.provider/UsersData")) {
+           if(selection.equals("username"))
+           {
+               String select="select DISTINCT "+DBContract.USERNAME+" from "+DBContract.TABLE_NAME+"";
+               cursor =db.rawQuery(select, null);
+               return cursor;
+           }
+           else
+           {
+               cursor=db.query(DBContract.TABLE_NAME,null,DBContract.USERNAME + " = ?", new String[]{selection},null,null,null);
+               //cursor =db.rawQuery(getCord, null);
+               return cursor;
+           }
+       }
+       else {
+           Log.d("Query","inside scoreUri");
+           if(selection.equals(null))
+           {
+               String select="select MAX("+DBContract.SCORE+") from "+DBContract.SCORE_TABLE+"";
+               cursor =db.rawQuery(select, null);
+               return cursor;
+           }
+           else
+           {
+               cursor=db.query(DBContract.SCORE_TABLE,null,DBContract.UNAME + " = ?", new String[]{selection},null,null,null);
+               return cursor;
+           }
+       }
+
+
+        /*if(uri.getEncodedPath().equals(DBContract.SCORE_TABLE))
         {
+            Log.d("Query","inside scoreUri");
             if(selection.equals(null))
             {
                 String select="select MAX("+DBContract.SCORE+") from "+DBContract.SCORE_TABLE+"";
@@ -48,7 +87,7 @@ public class PatternAuthProvider extends ContentProvider {
                 //cursor =db.rawQuery(getCord, null);
                 return cursor;
             }
-        }
+        }*/
     }
 
 
@@ -63,7 +102,44 @@ public class PatternAuthProvider extends ContentProvider {
         SQLiteDatabase db = PADbHelper.getWritableDatabase();
         long insrt=-1;
         db.beginTransaction();
-        if(uri.getEncodedPath().equals(DBContract.SCORE_TABLE))
+        if(String.valueOf(uri).equals("content://edu.ar.ub.patternauth.provider/UsersData")) {
+
+            Log.d(" insert", "inside main");
+            try {
+                insrt = db.insert(DBContract.TABLE_NAME, null, values);
+            } catch (Exception e) {
+                Log.d("Content Provider insert", "failed to insert because" + e);
+            }
+            if (insrt == -1) {
+                db.endTransaction();
+                Log.d("Content Provider insert", "failed to insert");
+            } else {
+                db.setTransactionSuccessful();
+                db.endTransaction();
+            }
+        }else
+        {
+                Log.d(" insert","inside score");
+                try
+                {
+                    insrt=db.insert(DBContract.SCORE_TABLE,null,values);
+                }
+                catch (Exception e)
+                {
+                    Log.d("Content Provider insert","failed to insert because"+e);
+                }
+                if(insrt==-1)
+                {
+                    db.endTransaction();
+                    Log.d("Content Provider insert","failed to insert");
+                }
+                else
+                {
+                    db.setTransactionSuccessful();
+                    db.endTransaction();
+                }
+        }
+       /* if(uri.getEncodedPath().equals(DBContract.SCORE_TABLE))
         {
             try
             {
@@ -104,7 +180,7 @@ public class PatternAuthProvider extends ContentProvider {
                 db.setTransactionSuccessful();
                 db.endTransaction();
             }
-        }
+        }*/
 
         return uri;
     }

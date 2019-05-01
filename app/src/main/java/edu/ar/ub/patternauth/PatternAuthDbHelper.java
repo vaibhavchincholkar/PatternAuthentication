@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class PatternAuthDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="PatternAuth.db";
-    private static final int DATABASE_VERSION=2;
+    private static final int DATABASE_VERSION=4;
     public PatternAuthDbHelper( Context context) {
         super(context,DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -32,7 +32,7 @@ public class PatternAuthDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DBContract.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DBContract.SCORE);
+        db.execSQL("DROP TABLE IF EXISTS " + DBContract.SCORE_TABLE);
         onCreate(db);
     }
 }

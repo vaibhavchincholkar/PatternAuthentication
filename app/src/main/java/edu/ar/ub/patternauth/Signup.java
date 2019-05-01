@@ -37,6 +37,7 @@ public class Signup extends AppCompatActivity {
         String name= getIntent().getStringExtra("PLAYER_NAME");
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         arSceneView = arFragment.getArSceneView().getScene();
+        storedPositions.clear();
         store=findViewById(R.id.store);
         reset=findViewById(R.id.reset);
         store.setOnClickListener(v -> {

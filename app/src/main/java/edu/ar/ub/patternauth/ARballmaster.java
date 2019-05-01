@@ -1,6 +1,7 @@
 package edu.ar.ub.patternauth;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -64,6 +65,7 @@ public class ARballmaster extends AppCompatActivity {
     Uri muri,scoreUri;
     ContentResolver PatternAuthResolver=null;
     String PlayerName;
+    private TextView highScore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,25 +73,26 @@ public class ARballmaster extends AppCompatActivity {
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         arSceneView = arFragment.getArSceneView().getScene();
         PlayerName= getIntent().getStringExtra("PLAYERNAME");
+        myHighestScore=getIntent().getIntExtra("PLAYERSCORE",0);
+        highScore=findViewById(R.id.HighScore);
+        highScore.setText("Highest Score of "+PlayerName +" : "+ myHighestScore);
+        highScore.setVisibility(View.INVISIBLE);
         Uri.Builder uriBuilder = new Uri.Builder();
         uriBuilder.scheme("content");
         uriBuilder.authority("edu.ar.ub.patternauth.provider");
+        uriBuilder.appendPath(DBContract.TABLE_NAME);
         muri=uriBuilder.build();
 
         Uri.Builder uriBuilder2 = new Uri.Builder();
         uriBuilder2.scheme("content");
         uriBuilder2.authority("edu.ar.ub.patternauth.provider");
-        uriBuilder2.appendEncodedPath(DBContract.SCORE_TABLE);
+        uriBuilder2.appendPath(DBContract.SCORE_TABLE);
         scoreUri=uriBuilder2.build();
         PatternAuthResolver=getContentResolver();
 
         //myHighestScore=getMyScore();
        // allHighestScore=getAllHighScore();
 
-        Toast toast2 =
-                Toast.makeText(this, PlayerName+"'s highest score:"+myHighestScore, Toast.LENGTH_LONG);
-        toast2.setGravity(Gravity.CENTER, 0, 0);
-        toast2.show();
 
         play = new Node();
         replay = new Node();
@@ -273,9 +276,12 @@ public class ARballmaster extends AppCompatActivity {
                                         play.setLocalPosition(new Vector3(0.0f, 0.0f, -1.0f));
                                         arSceneView.getCamera().addChild(play);
                                         play.setEnabled(true);
+                                        highScore.setVisibility(View.VISIBLE);
                                         play.setOnTapListener((hitTestResult, motionEvent) -> {
                                             start=true;
-                                            play.setEnabled(false); });
+                                            play.setEnabled(false);
+                                            highScore.setVisibility(View.INVISIBLE);
+                                        });
                                     }
                                     if(score<-1)
                                     {
@@ -291,9 +297,6 @@ public class ARballmaster extends AppCompatActivity {
                                         arFragment.getArSceneView().getSession().configure(config);
                                         anchor = arFragment.getArSceneView().getSession().hostCloudAnchor(plane.createAnchor(pose));
                                         anchorNode = new AnchorNode(anchor);
-
-                                        Anchor.CloudAnchorState cloudState = anchor.getCloudAnchorState();
-                                        // Toast.makeText(this, "Now hosting"+cloudState, Toast.LENGTH_LONG).show();
 
                                         Curr_score.setVisibility(View.VISIBLE);
                                         obj1.setRenderable(ball1);
@@ -460,8 +463,16 @@ public class ARballmaster extends AppCompatActivity {
     * addScore method add the score the current score of the user*/
     void addScore()
     {
+
         bubble.start();
         score++;
+        if(score>myHighestScore)
+        {
+            ContentValues userScore = new ContentValues();
+            userScore.put(DBContract.UNAME,PlayerName);
+            userScore.put(DBContract.SCORE,score);
+            PatternAuthResolver.insert(scoreUri,userScore);
+        }
         Curr_score.setText("Score : "+score);
     }
     int getMyScore()
@@ -498,6 +509,7 @@ public class ARballmaster extends AppCompatActivity {
     }
     void gameOver()
     {
+
         replay.setEnabled(true);
         over=true;
         obj1.setEnabled(false);

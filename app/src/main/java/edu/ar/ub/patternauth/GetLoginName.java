@@ -28,6 +28,7 @@ public class GetLoginName extends AppCompatActivity {
         Uri.Builder uriBuilder = new Uri.Builder();
         uriBuilder.scheme("content");
         uriBuilder.authority("edu.ar.ub.patternauth.provider");
+        uriBuilder.appendPath(DBContract.TABLE_NAME);
         muri=uriBuilder.build();
         PatternAuthResolver=getContentResolver();
         confrim=findViewById(R.id.confrim);

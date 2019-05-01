@@ -38,16 +38,26 @@ public class Login extends AppCompatActivity {
     private List<AnchorNode> currpositions =new ArrayList<>();
     private List<NodePosition> storedPositions =new ArrayList<>();
     private ContentResolver PatternAuthResolver = null;
-    Uri muri;
+    Uri muri,scoreUri;
     String PlayerName="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //Build main URI
         Uri.Builder uriBuilder = new Uri.Builder();
         uriBuilder.scheme("content");
         uriBuilder.authority("edu.ar.ub.patternauth.provider");
+        uriBuilder.appendPath(DBContract.TABLE_NAME);
         muri=uriBuilder.build();
+
+        //build score URI
+        Uri.Builder uriBuilder2 = new Uri.Builder();
+        uriBuilder2.scheme("content");
+        uriBuilder2.authority("edu.ar.ub.patternauth.provider");
+        uriBuilder2.appendPath(DBContract.SCORE_TABLE);
+        scoreUri=uriBuilder2.build();
+
         PatternAuthResolver=getContentResolver();
         PlayerName= getIntent().getStringExtra("PLAYERNAME");
         //PatternAuthResolver.delete(muri,null,null);
@@ -55,15 +65,21 @@ public class Login extends AppCompatActivity {
         arSceneView = arFragment.getArSceneView().getScene();
         submit=findViewById(R.id.submit);
         reset=findViewById(R.id.reset);
+
+
+
         submit.setOnClickListener(v -> {
             storedPositions.clear();
             if(verifyThePassword())
             {
-                Toast toast2 = Toast.makeText(this, "Welcome "+ PlayerName, Toast.LENGTH_LONG);
-                toast2.setGravity(Gravity.CENTER, 0, 0);
-                toast2.show();
+
+                Toast toast = Toast.makeText(this, "Welcome "+ PlayerName, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+
                 Intent ToTheGame = new Intent(this, ARballmaster.class);
                 ToTheGame.putExtra("PLAYERNAME",PlayerName);
+                ToTheGame.putExtra("PLAYERSCORE",getPlayerScore());
                 startActivity(ToTheGame);
             }
             else{
@@ -185,5 +201,26 @@ public class Login extends AppCompatActivity {
         }
         return true;
     }
+
+    public int getPlayerScore()
+    {
+        int sc=0;
+        Cursor score=PatternAuthResolver.query(scoreUri,null,PlayerName,null,null);
+        if(score==null)
+        {
+            Log.d("Score","null error");
+        }
+        else
+        {
+            while (score.moveToNext())
+            {
+                sc=score.getInt(score.getColumnIndex(DBContract.SCORE));
+                Log.d("Score",""+sc);
+            }
+        }
+
+        return sc;
+    }
+
 
 }

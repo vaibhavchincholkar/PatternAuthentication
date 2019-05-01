@@ -40,12 +40,13 @@ public class PatternTest extends AppCompatActivity {
         Uri.Builder uriBuilder = new Uri.Builder();
         uriBuilder.scheme("content");
         uriBuilder.authority("edu.ar.ub.patternauth.provider");
+        uriBuilder.appendPath(DBContract.TABLE_NAME);
         muri=uriBuilder.build();
 
         Uri.Builder uriBuilder2 = new Uri.Builder();
         uriBuilder2.scheme("content");
         uriBuilder2.authority("edu.ar.ub.patternauth.provider");
-        uriBuilder2.appendEncodedPath(DBContract.SCORE_TABLE);
+        uriBuilder2.appendPath(DBContract.SCORE_TABLE);
         scoreUri=uriBuilder2.build();
         PatternAuthResolver=getContentResolver();
         Toast toast = Toast.makeText(this, "No of objects "+Signup.storedPositions.size(), Toast.LENGTH_LONG);
