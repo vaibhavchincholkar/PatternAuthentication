@@ -1,6 +1,6 @@
 package edu.ar.ub.patternauth;
 /*
-* NodePosition class is used for convince to compare the x and y coordinates of the objects stored in the database*/
+* NodePosition class is used for convince to compare the x and y coordinates of the objects stored in the database and Anchor Node*/
 public class NodePosition {
 
     Float x;

@@ -18,12 +18,15 @@ import com.google.ar.sceneform.ux.ArFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Signup activity allows user to create pattern on the surface for authentication*/
 public class Signup extends AppCompatActivity {
     private ArFragment arFragment;
     private Scene arSceneView;
     Button store,reset;
     private ModelRenderable ballobject;
+    /**
+     * positions list stores the entered anchor nodes by the Player once user confirms the pattern we copy the position list into storedPositions*/
     public static List<AnchorNode> positions =new ArrayList<>();
     public static List<AnchorNode> storedPositions=new ArrayList<>();
     Float currentdistance, storeddistance;
@@ -94,6 +97,7 @@ public class Signup extends AppCompatActivity {
         super.onResume();
         storedPositions.clear();
     }
+    /*
     private boolean verifyThePassword()
     {
         Float x0,y0,x1,y1,sx0,sy0,sx1,sy1;
@@ -133,5 +137,5 @@ public class Signup extends AppCompatActivity {
             }
         }
         return true;
-    }
+    }*/
 }

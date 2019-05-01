@@ -20,11 +20,11 @@ import com.google.ar.sceneform.ux.ArFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-/*
+/**
 * Login Activity takes PlayerName from the Intent by which it was called.(i.e. GetLoginName activity)
-* It has ARfragment in it and allows user to create pattern on the surface
+* It has ARfragment in it, which allows player to create pattern on the surface
 * on the submission it verifies if the entered pattern is correct or not
-* if it is correct it redirects user to the ARBALLMASTER game
+* if it is correct it redirects user to the ARBALLMASTER game.
 *
 * */
 public class Login extends AppCompatActivity {
@@ -33,6 +33,8 @@ public class Login extends AppCompatActivity {
     Button submit,reset;
     private ModelRenderable ballobject;
     Float currentdistance, storeddistance;
+    /**
+     * currpositions list stores the AnchorNodes of objects put by the player and storedPositions has coordinates of stored position from the database*/
     private List<AnchorNode> currpositions =new ArrayList<>();
     private List<NodePosition> storedPositions =new ArrayList<>();
     private ContentResolver PatternAuthResolver = null;
@@ -108,6 +110,11 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    /**
+     * verifyThePassword method uses Global variable PlayerName which gets initialized when activity is called. it gets the PlayerName from the intent.
+     * verifyThePassword method takes the all the node coordinates from the database and puts it into a list and calls the checkdifference method
+     * if checkdiffrence returns true it returns true and vice a versa.
+     * */
     private boolean verifyThePassword()
     {
             Cursor UserPattern=PatternAuthResolver.query(muri,null,PlayerName,null,null);
@@ -133,7 +140,7 @@ public class Login extends AppCompatActivity {
         return false;
     }
 
-    /*
+    /**
     * checkdifferce method verifies the difference between x and y coordinates of the provided objects and stored objects.
     * it makes uses of two lists one is currpositions which has the current object provided by the user and storedlist which has
     * stored objects by the user

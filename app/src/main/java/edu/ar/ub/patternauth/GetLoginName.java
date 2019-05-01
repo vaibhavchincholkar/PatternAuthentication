@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-/*
+/**
 * GetLoginName activity takes PlayeName from the user and checks if that username exists in the database
 * if username exists in the database it redirects user to the Login activity
 * else it gives and error popup to the user.
@@ -57,7 +57,7 @@ public class GetLoginName extends AppCompatActivity {
 
         });
     }
-    /*
+    /**
      * checkIfUserNameAvailable function takes PlayerName as parameter and checks if the provided name is in the DataBase or not
      * if Database contains the PlayerName it returns true
      * else it returns false.
