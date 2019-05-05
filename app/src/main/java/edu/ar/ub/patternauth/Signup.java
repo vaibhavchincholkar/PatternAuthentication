@@ -26,10 +26,9 @@ public class Signup extends AppCompatActivity {
     Button store,reset;
     private ModelRenderable ballobject;
     /**
-     * positions list stores the entered anchor nodes by the Player once user confirms the pattern we copy the position list into storedPositions*/
+     * positions list stores the anchor nodes entered by the Player, once the user confirms the pattern we copy the position list into storedPositions list*/
     public static List<AnchorNode> positions =new ArrayList<>();
     public static List<AnchorNode> storedPositions=new ArrayList<>();
-    Float currentdistance, storeddistance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,45 +97,4 @@ public class Signup extends AppCompatActivity {
         super.onResume();
         storedPositions.clear();
     }
-    /*
-    private boolean verifyThePassword()
-    {
-        Float x0,y0,x1,y1,sx0,sy0,sx1,sy1;
-        if(storedPositions.size()!=positions.size())
-        {
-            return false;
-        }
-
-        for(int i=0;i<storedPositions.size()-1;i++)
-        {
-            //current position under check
-            x0=positions.get(i).getWorldPosition().x;
-            y0=positions.get(i).getWorldPosition().y;
-            sx0=storedPositions.get(i).getWorldPosition().x;
-            sy0=storedPositions.get(i).getWorldPosition().y;
-
-            for(int j=0;j<storedPositions.size();j++)
-            {
-                x1=positions.get(j).getWorldPosition().x;
-                y1=positions.get(j).getWorldPosition().y;
-                sx1=storedPositions.get(j).getWorldPosition().x;
-                sy1=storedPositions.get(j).getWorldPosition().y;
-                Float disx=x0-x1;
-                Float disy=y0-y1;
-                Float sdisx=sx0-sx1;
-                Float sdisy=sy0-sy1;
-                currentdistance = (float) Math.sqrt(disx*disx + disy*disy);
-                storeddistance = (float) Math.sqrt(sdisx*sdisx + sdisy*sdisy);
-                currentdistance=currentdistance*100;
-                storeddistance=storeddistance*100;
-                Float diff=currentdistance-storeddistance;
-                Math.abs(diff);
-                if(diff>8)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }*/
 }

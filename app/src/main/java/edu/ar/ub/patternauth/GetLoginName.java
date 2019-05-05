@@ -59,7 +59,7 @@ public class GetLoginName extends AppCompatActivity {
         });
     }
     /**
-     * checkIfUserNameAvailable function takes PlayerName as parameter and checks if the provided name is in the DataBase or not
+     * checkIfUserNameAvailable function takes PlayerName as a parameter and checks if the provided name is in the DataBase or not
      * if Database contains the PlayerName it returns true
      * else it returns false.
      * */

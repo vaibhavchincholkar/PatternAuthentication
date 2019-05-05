@@ -66,8 +66,6 @@ public class Login extends AppCompatActivity {
         submit=findViewById(R.id.submit);
         reset=findViewById(R.id.reset);
 
-
-
         submit.setOnClickListener(v -> {
             storedPositions.clear();
             if(verifyThePassword())
@@ -218,9 +216,6 @@ public class Login extends AppCompatActivity {
                 Log.d("Score",""+sc);
             }
         }
-
         return sc;
     }
-
-
 }

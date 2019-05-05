@@ -24,6 +24,5 @@ public class MainActivity extends AppCompatActivity {
             Intent register = new Intent(this, GetUserName.class);
             startActivity(register);
         });
-
     }
 }

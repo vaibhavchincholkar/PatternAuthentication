@@ -2,13 +2,11 @@ package edu.ar.ub.patternauth;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -61,7 +59,6 @@ public class ARballmaster extends AppCompatActivity {
     private MediaPlayer bubble,gmover;
     private TextView Curr_score;
     private int myHighestScore=0;
-    private int allHighestScore=0;
     Uri muri,scoreUri;
     ContentResolver PatternAuthResolver=null;
     String PlayerName;
@@ -89,10 +86,6 @@ public class ARballmaster extends AppCompatActivity {
         uriBuilder2.appendPath(DBContract.SCORE_TABLE);
         scoreUri=uriBuilder2.build();
         PatternAuthResolver=getContentResolver();
-
-        //myHighestScore=getMyScore();
-       // allHighestScore=getAllHighScore();
-
 
         play = new Node();
         replay = new Node();
@@ -266,7 +259,7 @@ public class ARballmaster extends AppCompatActivity {
 
                             for (Plane plane : frame.getUpdatedTrackables(Plane.class)) {
                                 if (plane.getTrackingState() == TrackingState.TRACKING) {
-                                    //as soon as planeis detected add everything
+                                    //as soon as plane is detected add everything
                                     Pose pose = plane.getCenterPose();
                                     // Anchor anchor = plane.createAnchor(pose);
                                     // AnchorNode anchorNode = new AnchorNode(anchor);
@@ -475,33 +468,6 @@ public class ARballmaster extends AppCompatActivity {
         }
         Curr_score.setText("Score : "+score);
     }
-    int getMyScore()
-    {
-        int sc=0;
-        Cursor score=PatternAuthResolver.query(scoreUri,null,PlayerName,null,null);
-        while (score.moveToNext())
-        {
-         Log.d("Score",""+score.getString(score.getColumnIndex(DBContract.SCORE)));
-        }
-        return sc;
-    }
-    int getAllHighScore()
-    {
-        Cursor score=PatternAuthResolver.query(scoreUri,null,null,null,null);
-        while (score.moveToNext())
-        {
-            return score.getInt(score.getColumnIndex(DBContract.SCORE));
-        }
-        return 0;
-    }
-
-    void storeHighScore()
-    {
-
-    }
-
-
-
     void decScore()
     {
         score=score-1;
